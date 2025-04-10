@@ -22,6 +22,4 @@ Another but tougher goal I could consider adding is the ability for users to log
 
 ## Shopping List Wireframe
 
-TODO: Replace the wireframe below with you own design.
-
-![wireframe](wireframe-example.png)
+![wireframe](wireframe.png)
