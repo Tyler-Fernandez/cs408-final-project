@@ -2,8 +2,6 @@
 
 Author: Tyler Fernandez
 
-Date: April 9, 2025
-
 ## Shopping List Overview
 
 This final project is a minimalistic, gray toned shopping list website. Users will have the ability to add items to their shopping list by inputting essential information, including the item’s name, the quantity they intend to purchase, and a general price for budgeting purposes. 
