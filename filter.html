@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Shopping List</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Shopping List</h1>
+
+    <nav>
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="filter.html">Filter</a>
+          </li>
+          <li>
+            <a href="about.html">About</a>
+          </li>
+        </ul>
+      </nav>
+
+
+    <button id="load-data">Load All Items</button>
+    <br>
+
+    <table id="items-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="items-body">
+        </tbody>
+    </table>
+
+    <hr>
+
+    <div class="form-container">
+        <h3>Add New Item to Shopping List</h3>
+        <form id="add-item-form">
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" placeholder="Enter ID">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter Name">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" placeholder="Enter Price">
+            <br>
+            <button type="submit">Add Item</button>
+        </form>
+    </div>
+
+    <script>
+        function loadItems() {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://wnuj910c85.execute-api.us-west-1.amazonaws.com/items");
+            xhr.addEventListener("load", function () {
+                if (xhr.status === 200) {
+                    let items = JSON.parse(xhr.responseText);
+                    let tbody = document.getElementById("items-body");
+                    tbody.innerHTML = ""; 
+                    if (!Array.isArray(items)) {
+                        items = [items];
+                    }
+
+                    items.forEach(item => {
+                        let row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${item.id}</td>
+                            <td>${item.name}</td>
+                            <td>${item.price}</td>
+                            <td><button onclick="deleteItem('${item.id}')">Delete</button></td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    alert("Error loading items: " + xhr.statusText);
+                }
+            });
+            xhr.send();
+        }
+
+        document.getElementById("load-data").onclick = loadItems;
+
+        document.getElementById("add-item-form").onsubmit = function (event) {
+            event.preventDefault(); 
+
+            let id = document.getElementById("id").value;
+            let name = document.getElementById("name").value;
+            let price = parseFloat(document.getElementById("price").value);
+
+            if (!id || !name || isNaN(price)) {
+                alert("Please fill in all fields correctly.");
+                return;
+            }
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("PUT", "https://wnuj910c85.execute-api.us-west-1.amazonaws.com/items");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.addEventListener("load", function () {
+                if (xhr.status === 200) {
+                    alert("Item added successfully!");
+                    loadItems(); 
+                    document.getElementById("add-item-form").reset(); 
+                } else {
+                    alert("Error adding item: " + xhr.statusText);
+                }
+            });
+            xhr.send(JSON.stringify({
+                id: id,
+                name: name,
+                price: price
+            }));
+        };
+
+
+        function deleteItem(id) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("DELETE", `https://wnuj910c85.execute-api.us-west-1.amazonaws.com/items/${id}`);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            
+            xhr.addEventListener("load", function () {
+                console.log("DELETE Response Status:", xhr.status);
+                console.log("DELETE Response Text:", xhr.responseText);
+                if (xhr.status === 200 || xhr.status === 204) {
+                    alert("Item deleted successfully!");
+                    loadItems(); 
+                } else {
+                    alert("Error deleting item: " + xhr.status + " - " + xhr.statusText + " - " + xhr.responseText);
+                }
+            });
+
+            xhr.addEventListener("error", function () {
+                console.log("DELETE Request Failed:", xhr.status, xhr.statusText);
+                alert("DELETE request failed: Network error or CORS issue.");
+            });
+
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
