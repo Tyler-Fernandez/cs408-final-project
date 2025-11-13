@@ -4,130 +4,151 @@
   box-sizing: border-box;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base page styles: font, background, text color, and comfortable line-height */
 body {
   font-family: 'Arial', 'sans-serif';
   background-color: #ffffff; 
-  color: #333; 
-  padding: 20px;
-  line-height: 1.6;
+  color: #333;
+  padding: 20px; 
+  line-height: 1.6; 
 }
 
+/* Main page title styling: border, padding, shadow, and constrained width */
 h1 {
   border: 2px solid #000000; 
-  padding: 10px;
+  padding: 10px; 
   background-color: #ffffff; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; 
   font-size: 2.5rem; 
   color: #000000; 
-  max-width: 325px;
+  max-width: 325px; 
 }
 
+/* Top navigation bar layout: fixed height and flex container */
+nav {
+  height: 50px; 
+  flex: 100%;
+  display: flex; 
+}
+
+/* Reset list styles inside nav and make it a horizontal flex container */
+nav ul {
+  padding: 0; 
+  list-style-type: none; 
+  flex: 2; 
+  display: flex; 
+}
+
+/* Individual nav list items: inline behavior and centered text */
+nav li {
+  display: inline; 
+  text-align: center; 
+  flex: 1; 
+}
+
+/* Generic list item size tweak used elsewhere (keeps font larger) */
+li {
+  font-size: 1.5em;
+}
+
+/* Primary action button used for loading data */
 #load-data {
   background-color: #000000; 
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  font-size: 1rem; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+  display: block; 
 }
 
+/* Slightly lighter background when hovering the primary button */
 #load-data:hover {
-  background-color: #6a6966; 
+  background-color: #6a6966;
 }
 
+
+/* Small form container: border and inner padding */
+.form-container {
+  max-width: 300px; 
+  border: 1px solid black; 
+  padding: 5px; 
+}
+
+/* Labels inside forms: block layout and spacing */
+.form-container label {
+  display: block; 
+  margin-bottom: 5px; 
+  font-weight: 500; 
+  color: #555; 
+}
+
+/* Table overall container: width, background, and border */
 table {
-  width: 40%;
+  width: 40%; 
   max-width: 800px; 
   background-color: #6a6966; 
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
   overflow: hidden; 
-  border: 2px solid black;
+  border: 2px solid black; 
 }
 
+/* Table head and cell padding, text and default font sizing */
 th, td {
-  padding: 12px 15px;
-  text-align: left;
-  color: white;
-  font-size: 1.1rem;
+  padding: 12px 15px; 
+  text-align: left; 
+  color: white; 
+  font-size: 1.1rem; 
 }
 
+/* Table header specifics: uppercase and medium weight */
 th {
   background-color: #6a6966; 
-  color: white;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.9rem;
+  color: white; 
+  font-weight: 600; 
+  text-transform: uppercase; 
+  font-size: 0.9rem; 
 }
 
+/* Zebra striping for better row separation */
 tr:nth-child(even) {
   background-color: #6a6966; 
 }
 
+/* Hover state for rows to indicate interactivity */
 tr:hover {
   background-color: #000000; 
 }
 
+/* Buttons inside table cells (row actions) */
 td button {
   background-color: #e74c3c; 
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: white; 
+  border: none; 
+  padding: 6px 12px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
 }
 
+/* Slightly darker button background on hover */
 td button:hover {
-  background-color: #c0392b; 
+  background-color: #c0392b;
 }
 
-.form-container {
-  max-width: 300px;
-  border: 1px solid black;
-  padding: 5px;
-}
-
-.form-container label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #555;
-}
-
+/* Horizontal rule used as a soft separator */
 hr {
-  border: 0;
-  height: 1px;
-  background: #e0e0e0;
-  margin: 30px 0;
-}
-
-nav {
-  height: 50px;
-  flex: 100%;
-  display: flex;
-  
-}
-
-nav ul {
-  padding: 0;
-  list-style-type: none;
-  flex: 2;
-  display: flex;
-  
-}
-
-nav li {
-  display: inline;
-  text-align: center;
-  flex: 1;
-  
-}
-
-li {
-  font-size: 1.5em;
-  
+  border: 0; 
+  height: 1px; 
+  background: #e0e0e0; 
+  margin: 30px 0; 
 }
