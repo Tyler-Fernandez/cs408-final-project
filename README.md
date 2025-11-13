@@ -1,7 +1,7 @@
 # Shopping List Final Project
 
-Author: Tyler Fernandez
-Date: November 12, 2025
+- Author: Tyler Fernandez
+- Date: November 12, 2025
 
 ## Shopping List Overview
 
