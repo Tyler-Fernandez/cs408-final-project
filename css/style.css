@@ -70,7 +70,8 @@ li {
   border-radius: 5px; 
   cursor: pointer; 
   transition: background-color 0.3s ease; 
-  display: block; 
+  display: block;
+  margin: 18px auto; /* center the button horizontally */
 }
 
 /* Slightly lighter background when hovering the primary button */
@@ -83,7 +84,8 @@ li {
 .form-container {
   max-width: 300px; 
   border: 1px solid black; 
-  padding: 5px; 
+  padding: 5px;
+  margin: 20px auto; /* center the form container */
 }
 
 /* Labels inside forms: block layout and spacing */
@@ -102,6 +104,7 @@ table {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
   overflow: hidden; 
   border: 2px solid black; 
+  margin: 18px auto; /* center the table horizontally */
 }
 
 /* Table head and cell padding, text and default font sizing */
@@ -153,4 +156,30 @@ hr {
   height: 1px; 
   background: #e0e0e0; 
   margin: 30px 0; 
+}
+
+/* Stylish header links in the top nav */
+.header-link {
+  display: inline-block;
+  padding: 8px 14px;
+  margin: 6px 8px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #343a40 0%, #000000 100%);
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.header-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  opacity: 0.95;
+}
+
+.header-link:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
