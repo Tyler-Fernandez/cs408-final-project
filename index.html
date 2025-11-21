@@ -47,7 +47,7 @@ Description: This is the home page for the shopping list website. It provides an
     <table id="items-table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Category</th>
                 <th>Name</th>
                 <th>Price</th>
                 <th>Action</th>
@@ -58,15 +58,22 @@ Description: This is the home page for the shopping list website. It provides an
     </table>
 
     <hr>
-    <p>To use this form, please fill in all fields and click "Add Item". ID must be a unique non-zero positive number.
+    <p>To use this form, please fill in all fields and click "Add Item". A category must be selected from the drop-down menu.
          Name must be a non-empty string. Price must be a non-negative number.
         
     </p>
     <div class="form-container">
         <h3>Add New Item to Shopping List</h3>
         <form id="add-item-form">
-            <label for="id">ID:</label>
-            <input type="text" id="id" name="id" placeholder="Enter ID">
+            <label for="id">Category:</label>
+            <select id="id" name="id">
+                <option value="">Select Category</option>
+                <option value="Food">Food</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Cosmetics">Cosmetics</option>
+                <option value="Hygiene">Hygiene</option>
+                <option value="Household Items">Household Items</option>
+            </select>
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Enter Name">
             <label for="price">Price:</label>
