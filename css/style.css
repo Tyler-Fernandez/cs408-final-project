@@ -80,20 +80,77 @@ li {
 }
 
 
-/* Small form container: border and inner padding */
+/* Form: card-style container and improved inputs */
 .form-container {
-  max-width: 300px; 
-  border: 1px solid black; 
-  padding: 5px;
-  margin: 20px auto; /* center the form container */
+  max-width: 420px;
+  margin: 22px auto;
+  padding: 20px 18px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+  border: 2px solid #000000; /* thick black border per request */
+  box-shadow: 0 10px 30px rgba(13, 30, 60, 0.06);
 }
 
-/* Labels inside forms: block layout and spacing */
+/* Labels inside forms: clear hierarchy */
 .form-container label {
-  display: block; 
-  margin-bottom: 5px; 
-  font-weight: 500; 
-  color: #555; 
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-container input,
+.form-container select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d6dbe0;
+  background: #fff;
+  font-size: 0.95rem;
+  color: #222;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.08s ease;
+}
+
+.form-container input:focus,
+.form-container select:focus {
+  outline: none;
+  border-color: #4f8bff;
+  box-shadow: 0 8px 22px rgba(79,139,255,0.12);
+  transform: translateY(-1px);
+}
+
+.form-container input::placeholder {
+  color: #9aa4b2;
+}
+
+.form-container button[type="submit"] {
+  margin-top: 6px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(90deg, #4f8bff 0%, #346ef6 100%);
+  box-shadow: 0 10px 24px rgba(52,110,246,0.18);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+
+.form-container button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(52,110,246,0.22);
+  opacity: 0.98;
+}
+
+.form-container .small-note {
+  font-size: 0.85rem;
+  color: #6b7280;
 }
 
 /* Table overall container: width, background, and border */
