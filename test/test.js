@@ -1,3 +1,5 @@
+// TODO: write tests
+
 import {sayHello} from '../js/main.js';
 
 QUnit.module('hello', function() {
