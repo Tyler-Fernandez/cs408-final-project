@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Calendar - Shopping List</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Dark, rigid calendar styling */
+    .calendar-wrapper {
+      max-width: 520px;
+      margin: 28px auto;
+      padding: 16px;
+      border-radius: 6px;
+      background: #0b1020; /* deep charcoal */
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      border: 3px solid #000; /* solid black border for rigidity */
+      color: #e6eef8;
+    }
+
+    .calendar-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .month-label {
+      font-size:1.15rem;
+      font-weight:700;
+      color:#f8fafc;
+      letter-spacing:0.6px;
+    }
+
+    .month-controls button {
+      background: #0f1724; /* slightly lighter than wrapper */
+      border: 1px solid #000; /* rigid border */
+      color: #e6eef8;
+      padding:6px 10px;
+      margin-left:6px;
+      border-radius:4px; /* small radius for rigid look */
+      cursor:pointer;
+      box-shadow:none;
+    }
+
+    .month-controls button:hover{ opacity:0.95; transform: translateY(-1px); }
+
+    .month-controls button[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap:8px;
+      align-items:stretch;
+    }
+
+    .weekday {
+      text-align:center;
+      font-weight:700;
+      color:#9aa4b2;
+      padding:8px 6px;
+      background:transparent;
+    }
+
+    .day {
+      min-height:62px;
+      background: #0f1724; /* flat dark cell */
+      border-radius: 6px;
+      padding:8px;
+      color:#e6eef8;
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-end;
+      font-weight:700;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .day.inactive {
+      color:#475569;
+      background: #07111a;
+      border: 1px solid rgba(255,255,255,0.01);
+      font-weight:600;
+      opacity:0.75;
+    }
+
+    .day.today {
+      background: #111827; /* dark blue/gray */
+      color: #fff;
+      box-shadow: 0 0 0 2px #4f8bff inset; /* solid inner ring */
+      border: 2px solid #4f8bff; /* visible border for today */
+    }
+
+    .calendar-note { margin-top:10px; color:#94a3b8; font-size:0.95rem; }
+  </style>
+</head>
+<body>
+    <h1>
+        <img src="img/shopping-cart.png" alt="Shopping cart logo" class="site-logo">
+        Shopping List
+    </h1>
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html" class="header-link">Home</a>
+                </li>
+            <li>
+                <a href="filter.html" class="header-link">Filter Expensive</a>
+            </li>
+            <li>
+                <a href="calendar.html" class="header-link">Calendar</a>
+            </li>
+            <li>
+                <a href="about.html" class="header-link">About</a>
+            </li>
+            
+        </ul>
+    </nav>
+    <br>
+    <p>This page contains a calendar to help the user plan shopping trips and sales.</p>
+  <div class="calendar-wrapper">
+    <div class="calendar-header">
+      <div class="month-label" id="monthLabel">Month Year</div>
+      <div class="month-controls">
+        <button id="prevMonth" aria-label="Previous month">◀</button>
+        <button id="todayBtn" aria-label="Go to today">Today</button>
+        <button id="nextMonth" aria-label="Next month">▶</button>
+      </div>
+    </div>
+
+    <div class="calendar-grid" id="calendarGrid">
+      <!-- Weekday labels -->
+      <div class="weekday">Sun</div>
+      <div class="weekday">Mon</div>
+      <div class="weekday">Tue</div>
+      <div class="weekday">Wed</div>
+      <div class="weekday">Thu</div>
+      <div class="weekday">Fri</div>
+      <div class="weekday">Sat</div>
+      <!-- Days will be injected here -->
+    </div>
+
+    <div class="calendar-note">Tip: use the arrows or the Today button to navigate months.</div>
+  </div>
+
+  <script>
+    (function() {
+      const monthLabel = document.getElementById('monthLabel');
+      const grid = document.getElementById('calendarGrid');
+      const prevBtn = document.getElementById('prevMonth');
+      const nextBtn = document.getElementById('nextMonth');
+      const todayBtn = document.getElementById('todayBtn');
+
+      let viewDate = new Date(); // current viewing date (month/year)
+
+      function startOfMonth(d){ return new Date(d.getFullYear(), d.getMonth(), 1); }
+      function daysInMonth(d){ return new Date(d.getFullYear(), d.getMonth()+1, 0).getDate(); }
+
+      function render() {
+        // update label
+        const opts = { month: 'long', year: 'numeric' };
+        monthLabel.textContent = viewDate.toLocaleDateString(undefined, opts);
+
+        // clear previous day cells (keep weekday labels)
+        const children = Array.from(grid.children).slice(7);
+        children.forEach(c => c.remove());
+
+        const first = startOfMonth(viewDate);
+        const startWeekday = first.getDay(); // 0=Sun
+        const totalDays = daysInMonth(viewDate);
+
+        // build total slots including leading and trailing days
+        const totalCells = startWeekday + totalDays;
+        const remainder = totalCells % 7 === 0 ? 0 : (7 - (totalCells % 7));
+        const totalSlots = totalCells + remainder;
+
+        const today = new Date();
+        // iterate slots and compute actual date for each slot
+        for (let slot = 0; slot < totalSlots; slot++){
+          const dayNumber = slot - startWeekday + 1; // may be <=0 or > totalDays
+          const cellDate = new Date(viewDate.getFullYear(), viewDate.getMonth(), dayNumber);
+
+          const cell = document.createElement('div');
+          // if the date is before today, show an empty placeholder (remove past dates)
+          if (cellDate < new Date(today.getFullYear(), today.getMonth(), today.getDate())){
+            cell.className = 'day inactive';
+            cell.textContent = '';
+          } else {
+            cell.className = 'day';
+            // show day number for this date
+            cell.textContent = cellDate.getDate();
+            // highlight today
+            if (cellDate.getFullYear() === today.getFullYear() && cellDate.getMonth() === today.getMonth() && cellDate.getDate() === today.getDate()){
+              cell.classList.add('today');
+            }
+          }
+
+          grid.appendChild(cell);
+        }
+
+          // enable/disable prev button: only enable if viewing a month after the current month
+          if (prevBtn) {
+            const viewYear = viewDate.getFullYear();
+            const viewMonth = viewDate.getMonth();
+            const todayYear = today.getFullYear();
+            const todayMonth = today.getMonth();
+            const isAfter = (viewYear > todayYear) || (viewYear === todayYear && viewMonth > todayMonth);
+            prevBtn.disabled = !isAfter;
+          }
+      }
+
+      // previous month navigation: only works when enabled (i.e., user is ahead of current month)
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(){
+          // prevent moving back past today
+          const today = new Date();
+          const newView = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
+          // allow if newView is after or equal to current month
+          const newYear = newView.getFullYear();
+          const newMonth = newView.getMonth();
+          const todayYear = today.getFullYear();
+          const todayMonth = today.getMonth();
+          const canGoBack = (newYear > todayYear) || (newYear === todayYear && newMonth >= todayMonth);
+          if (canGoBack) {
+            viewDate = newView;
+            render();
+          }
+        });
+      }
+
+      nextBtn.addEventListener('click', function(){
+        viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1);
+        render();
+      });
+
+      todayBtn.addEventListener('click', function(){
+        viewDate = new Date();
+        render();
+      });
+
+      // initial render
+      render();
+    })();
+  </script>
+</body>
+</html>
