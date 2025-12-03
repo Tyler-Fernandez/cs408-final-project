@@ -27,10 +27,18 @@ h1 {
   padding: 10px; 
   background-color: #ffffff; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px; 
+  margin: 0 auto 20px; 
+  width: fit-content; /* shrink to fit logo + text */
   font-size: 2.5rem; 
   color: #000000; 
-  max-width: 325px; 
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-logo {
+  width: 48px;
+  height: auto;
 }
 
 /* Top navigation bar layout: fixed height and flex container */
@@ -195,7 +203,7 @@ tr:hover {
 td button {
   background-color: #e74c3c; 
   color: white; 
-  border: none; 
+  border: none;
   padding: 6px 12px; 
   border-radius: 4px; 
   cursor: pointer; 
@@ -215,28 +223,43 @@ hr {
   margin: 30px 0; 
 }
 
-/* Stylish header links in the top nav */
+/* Sleek nav link buttons: glassy pill with subtle border and hover accent */
 .header-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 8px 14px;
   margin: 6px 8px;
-  color: #ffffff;
-  background: linear-gradient(135deg, #343a40 0%, #000000 100%);
+  color: #111827; /* dark text for good contrast on light page */
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  border: 1px solid #000000;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  letter-spacing: 0.3px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+  box-shadow: 0 4px 12px rgba(2,6,23,0.06);
 }
 
 .header-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  opacity: 0.95;
+  transform: translateY(-3px);
+  color: #ffffff;
+  background: linear-gradient(90deg, #334155 0%, #0f172a 100%);
+  box-shadow: 0 12px 30px rgba(2,6,23,0.12);
 }
 
 .header-link:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(2,6,23,0.08);
+}
+
+/* Small responsive tweak: reduce padding on narrow screens */
+@media (max-width: 560px) {
+  .header-link {
+    padding: 6px 10px;
+    margin: 4px 6px;
+    font-size: 0.95rem;
+  }
 }
